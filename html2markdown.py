@@ -46,9 +46,17 @@ _supportedTags = {
 _supportedAttributes = (
 	'a href',
 	'a title',
+	# Add support for these because all our html text has it and we
+	# don't care about bringing it to markdown.
+	'a rel',
+	'a target',
 	'img alt',
 	'img src',
 	'img title',
+	'h1 class',
+	'h2 class',
+	'span class',
+	'p class',
 )
 
 _inlineTags = {
@@ -198,7 +206,7 @@ def _markdownify(tag, _listType=None, _blockQuote=False, _listIndex=1):
 		for child in children:
 			_markdownify(child)
 	elif tag.name == 'br':
-		tag.string = '  \n'
+		tag.string = '\n\\\n'
 		tag.unwrap()
 	elif tag.name == 'img':
 		alt = ''
@@ -319,8 +327,8 @@ def _markdownify(tag, _listType=None, _blockQuote=False, _listIndex=1):
 			tag.unwrap()
 			return
 		elif tag.name in ('strong','b'):
-			tag.insert_before('__')
-			tag.insert_after('__')
+			tag.insert_before('**')
+			tag.insert_after('**')
 			tag.unwrap()
 		elif tag.name in ('em','i'):
 			tag.insert_before('_')
