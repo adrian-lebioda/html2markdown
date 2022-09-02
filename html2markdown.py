@@ -43,6 +43,12 @@ _supportedTags = {
 	'pre','code',
 	'hr'
 }
+
+_globallySupportedAttributes = (
+	'class',
+	'id'
+)
+
 _supportedAttributes = (
 	'a href',
 	'a title',
@@ -53,10 +59,6 @@ _supportedAttributes = (
 	'img alt',
 	'img src',
 	'img title',
-	'h1 class',
-	'h2 class',
-	'span class',
-	'p class',
 )
 
 _inlineTags = {
@@ -122,7 +124,7 @@ _inlineTags = {
 }
 
 def _supportedAttrs(tag):
-	sAttrs = [attr.split(' ')[1] for attr in _supportedAttributes if attr.split(' ')[0]==tag.name]
+	sAttrs = [attr.split(' ')[1] for attr in _supportedAttributes if attr.split(' ')[0]==tag.name] + list(_globallySupportedAttributes)
 	for attr in tag.attrs:
 		if attr not in sAttrs:
 			return False
